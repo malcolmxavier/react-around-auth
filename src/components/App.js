@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, useHistory, withRouter } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import Register from './Register.js';
 import Login from './Login.js';
 import InfoToolTip from './InfoTooltip.js';
@@ -197,52 +197,50 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
-        <BrowserRouter>
-          <Switch>
-            <Route path='/signup'>
-              <Header link='/signin' linkText='Log in' />
-              <Register handleSignup={handleSignup} />
-            </Route>
-            <Route path='/signin'>
-              <Header link='/signup' linkText='Sign up' />
-              <Login handleLogin={handleLogin} />
-            </Route>
-            <ProtectedRoute exact path='/' isLoggedIn={isLoggedIn} component={Main} />
-            <Header link='/signin' linkText='Sign Out' onClick={handleSignOut} />
-            <Main 
-              onEditAvatar={handleEditAvatarClick}
-              onEditProfile={handleEditProfileClick}
-              onAddCard={handleAddCardClick}    
-            >
-              {cards.map((card) => {
-              return (
-                <Card
-                card={card}
-                key={card._id}
-                id={card._id}
-                image={card.link}
-                title={card.name}
-                likesCount={card.likes.length}
-                onCardLike={handleCardLike}
-                onDeleteCard={handleDeleteCardClick}
-                onCard={handleCardClick}
-                />
-              )
-            })}
-            </Main>
-            <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
-            <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
-            <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} onAddCardSubmit={handleAddCardSubmit} />
-            <PopupWithImage image={image} title={imageCaption} onClose={closeAllPopups} isOpen={isImagePopupOpen} />
-            <PopupWithForm name="delete-card" action='Delete Card' title='Are you sure?' button='yes' onClose={closeAllPopups} isOpen={isDeleteCardPopupOpen} onSubmit={handleCardDelete} />
-            <Footer />
-          </Switch>
-        </BrowserRouter>
+        <Switch>
+          <Route path='/signup'>
+            <Header link='/signin' linkText='Log in' />
+            <Register handleSignup={handleSignup} />
+          </Route>
+          <Route path='/signin'>
+            <Header link='/signup' linkText='Sign up' />
+            <Login handleLogin={handleLogin} />
+          </Route>
+          <ProtectedRoute exact path='/' isLoggedIn={isLoggedIn} component={Main} />
+          <Header link='/signin' linkText='Sign Out' onClick={handleSignOut} />
+          <Main 
+            onEditAvatar={handleEditAvatarClick}
+            onEditProfile={handleEditProfileClick}
+            onAddCard={handleAddCardClick}    
+          >
+            {cards.map((card) => {
+            return (
+              <Card
+              card={card}
+              key={card._id}
+              id={card._id}
+              image={card.link}
+              title={card.name}
+              likesCount={card.likes.length}
+              onCardLike={handleCardLike}
+              onDeleteCard={handleDeleteCardClick}
+              onCard={handleCardClick}
+              />
+            )
+          })}
+          </Main>
+          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
+          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
+          <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} onAddCardSubmit={handleAddCardSubmit} />
+          <PopupWithImage image={image} title={imageCaption} onClose={closeAllPopups} isOpen={isImagePopupOpen} />
+          <PopupWithForm name="delete-card" action='Delete Card' title='Are you sure?' button='yes' onClose={closeAllPopups} isOpen={isDeleteCardPopupOpen} onSubmit={handleCardDelete} />
+          <Footer />
+        </Switch>
       </div>
     </CurrentUserContext.Provider>
     
   );
 }
 
-export default withRouter(App);
+export default App;
 
