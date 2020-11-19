@@ -1,4 +1,4 @@
-Malcolm X's 14th Yandex Project v1.0
+Malcolm X's 14th Yandex Project v1.1
 
 This is a sample project to demonstrate grasp of JS React and Express skills.
 

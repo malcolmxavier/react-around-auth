@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useHistory, withRouter } from 'react-router-dom';
 import Register from './Register.js';
 import Login from './Login.js';
 import InfoToolTip from './InfoTooltip.js';
@@ -244,5 +244,5 @@ function App() {
   );
 }
 
-export default App;
+export default withRouter(App);
 
