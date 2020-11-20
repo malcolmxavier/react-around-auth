@@ -206,29 +206,30 @@ function App() {
             <Header link='/signup' linkText='Sign up' />
             <Login handleLogin={handleLogin} />
           </Route>
-          <ProtectedRoute exact path='/' isLoggedIn={isLoggedIn} component={Main} />
-          <Header link='/signin' linkText='Sign Out' onClick={handleSignOut} />
-          <Main 
-            onEditAvatar={handleEditAvatarClick}
-            onEditProfile={handleEditProfileClick}
-            onAddCard={handleAddCardClick}    
-          >
-            {cards.map((card) => {
-            return (
-              <Card
-              card={card}
-              key={card._id}
-              id={card._id}
-              image={card.link}
-              title={card.name}
-              likesCount={card.likes.length}
-              onCardLike={handleCardLike}
-              onDeleteCard={handleDeleteCardClick}
-              onCard={handleCardClick}
-              />
-            )
-          })}
-          </Main>
+          <ProtectedRoute exact path='/' isLoggedIn={true}>
+            <Header link='/signin' linkText='Sign Out' onClick={handleSignOut} />
+            <Main 
+              onEditAvatar={handleEditAvatarClick}
+              onEditProfile={handleEditProfileClick}
+              onAddCard={handleAddCardClick}    
+            >
+              {cards.map((card) => {
+              return (
+                <Card
+                card={card}
+                key={card._id}
+                id={card._id}
+                image={card.link}
+                title={card.name}
+                likesCount={card.likes.length}
+                onCardLike={handleCardLike}
+                onDeleteCard={handleDeleteCardClick}
+                onCard={handleCardClick}
+                />
+              )
+            })}
+            </Main>
+          </ProtectedRoute>
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
           <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} onAddCardSubmit={handleAddCardSubmit} />
