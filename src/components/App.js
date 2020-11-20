@@ -20,7 +20,7 @@ import '../index.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-  const [isSuccessful, setIsSuccessful] = useState(false);
+  const [isSuccessful, setIsSuccessful] = React.useState(false);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [userData, setUserData] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({avatar: '', name: '', about: ''});
