@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import Register from './Register.js';
 import Login from './Login.js';
-import InfoToolTip from './InfoTooltip.js';
+import InfoTooltip from './InfoTooltip.js';
 import ProtectedRoute from './ProtectedRoute.js';
 import Header from './Header.js';
 import Main from './Main.js';
@@ -20,6 +20,7 @@ import '../index.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isSuccessful, setIsSuccessful] = useState(false);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [userData, setUserData] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({avatar: '', name: '', about: ''});
@@ -37,6 +38,7 @@ function App() {
     auth.register(email, password)
     .then((res) => {
         if (!res || res.statusCode === 400) {
+          setIsSuccessful(false);
           setIsInfoTooltipPopupOpen(true);
           throw new Error('Something is not right.');
         }
@@ -44,6 +46,7 @@ function App() {
         return res;
     })
     .then(() => {
+      setIsSuccessful(true);
       setIsInfoTooltipPopupOpen(true);
       history.push('/signin');
     })
@@ -230,6 +233,7 @@ function App() {
             })}
             </Main>
           </ProtectedRoute>
+          <InfoTooltip valid={isSuccessful} isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopups} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
           <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} onAddCardSubmit={handleAddCardSubmit} />
