@@ -6,7 +6,7 @@ import InfoTooltip from './InfoTooltip.js';
 import ProtectedRoute from './ProtectedRoute.js';
 import Header from './Header.js';
 import Main from './Main.js';
-import Card from './Card.js';
+// import Card from './Card.js';
 import Footer from './Footer.js';
 import PopupWithForm from './PopupWithForm.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
@@ -209,30 +209,19 @@ function App() {
             <Header link='/signup' linkText='Sign up' />
             <Login handleLogin={handleLogin} />
           </Route>
-          <ProtectedRoute exact path='/' isLoggedIn={true}>
-            <Header link='/signin' linkText='Sign Out' onClick={handleSignOut} />
-            <Main 
-              onEditAvatar={handleEditAvatarClick}
-              onEditProfile={handleEditProfileClick}
-              onAddCard={handleAddCardClick}    
-            >
-              {cards.map((card) => {
-              return (
-                <Card
-                card={card}
-                key={card._id}
-                id={card._id}
-                image={card.link}
-                title={card.name}
-                likesCount={card.likes.length}
-                onCardLike={handleCardLike}
-                onDeleteCard={handleDeleteCardClick}
-                onCard={handleCardClick}
-                />
-              )
-            })}
-            </Main>
-          </ProtectedRoute>
+          <ProtectedRoute 
+            exact path='/'
+            isLoggedIn={isLoggedIn}
+            component={Main}
+            cards={cards}
+            onEditAvatar={handleEditAvatarClick}
+            onEditProfile={handleEditProfileClick}
+            onAddCard={handleAddCardClick}
+            onCardLike={handleCardLike}
+            onDeleteCard={handleDeleteCardClick}
+            onCard={handleCardClick}
+          />
+          <Header link='/signin' linkText='Sign Out' onClick={handleSignOut} />
           <InfoTooltip valid={isSuccessful} isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopups} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>

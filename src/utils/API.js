@@ -85,7 +85,7 @@ class API {
   }
 
   const api = new API({
-    baseURL: "https://register.nomoreparties.co",
+    baseURL: "https://around.nomoreparties.co/v1/group-3",
     headers: {
       authorization: "bfb84dd3-54e8-4642-a5bf-7fe819e5fd4b",
       "Content-Type": "application/json"

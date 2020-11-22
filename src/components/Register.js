@@ -24,7 +24,7 @@ function Register(props) {
             <form className='form' onSubmit={handleSubmit}>
                 <input className='form__input' type='email' placeholder='Email' required onChange={handleEmailChange} />
                 <span className='form__error'></span>
-                <input className='form__input' type='text' placeholder='Password' required minlength='8' onChange={handlePasswordChange} />
+                <input className='form__input' type='text' placeholder='Password' required minLength='8' onChange={handlePasswordChange} />
                 <span className='form__error'></span>
                 <button className='form__button' type='submit' aria-label='Sign Up' onClick={handleSubmit}>Sign up</button>
             </form>
