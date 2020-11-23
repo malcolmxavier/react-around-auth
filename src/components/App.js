@@ -6,7 +6,6 @@ import InfoTooltip from './InfoTooltip.js';
 import ProtectedRoute from './ProtectedRoute.js';
 import Header from './Header.js';
 import Main from './Main.js';
-// import Card from './Card.js';
 import Footer from './Footer.js';
 import PopupWithForm from './PopupWithForm.js';
 import EditAvatarPopup from './EditAvatarPopup.js';
@@ -41,14 +40,12 @@ function App() {
           setIsSuccessful(false);
           setIsInfoTooltipPopupOpen(true);
           throw new Error('Something is not right.');
+        } else {
+            setIsSuccessful(true);
+            setIsInfoTooltipPopupOpen(true);
+            history.push('/signin');
         }
-
         return res;
-    })
-    .then(() => {
-      setIsSuccessful(true);
-      setIsInfoTooltipPopupOpen(true);
-      history.push('/signin');
     })
     .catch(err => console.log(err));
 }
@@ -62,9 +59,10 @@ function App() {
     .then((data) => {
       if (!data) {
           throw new Error('Something is not right.');
+      } else {
+        history.push('/');
       }
     })
-    .then(() => history.push('/'))
     .catch(err => console.log(err));
   }
 
@@ -212,6 +210,8 @@ function App() {
           <ProtectedRoute 
             exact path='/'
             isLoggedIn={isLoggedIn}
+            userEmail={userData.email}
+            onHandleSignOut={handleSignOut}
             component={Main}
             cards={cards}
             onEditAvatar={handleEditAvatarClick}
@@ -221,7 +221,6 @@ function App() {
             onDeleteCard={handleDeleteCardClick}
             onCard={handleCardClick}
           />
-          <Header link='/signin' linkText='Sign Out' onClick={handleSignOut} />
           <InfoTooltip valid={isSuccessful} isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopups} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>

@@ -1,0 +1,9 @@
+.header__username {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.125rem;
+    line-height: 1.375rem;
+    color: #ffffff;
+    text-decoration: none;
+}
