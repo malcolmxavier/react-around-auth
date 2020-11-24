@@ -221,14 +221,14 @@ function App() {
             onDeleteCard={handleDeleteCardClick}
             onCard={handleCardClick}
           />
-          <InfoTooltip valid={isSuccessful} isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopups} />
-          <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
-          <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
-          <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} onAddCardSubmit={handleAddCardSubmit} />
-          <PopupWithImage image={image} title={imageCaption} onClose={closeAllPopups} isOpen={isImagePopupOpen} />
-          <PopupWithForm name="delete-card" action='Delete Card' title='Are you sure?' button='yes' onClose={closeAllPopups} isOpen={isDeleteCardPopupOpen} onSubmit={handleCardDelete} />
-          <Footer />
         </Switch>
+        <InfoTooltip valid={isSuccessful} isOpen={isInfoTooltipPopupOpen} onClose={closeAllPopups} />
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
+        <AddCardPopup isOpen={isAddCardPopupOpen} onClose={closeAllPopups} onAddCardSubmit={handleAddCardSubmit} />
+        <PopupWithImage image={image} title={imageCaption} onClose={closeAllPopups} isOpen={isImagePopupOpen} />
+        <PopupWithForm name="delete-card" action='Delete Card' title='Are you sure?' button='yes' onClose={closeAllPopups} isOpen={isDeleteCardPopupOpen} onSubmit={handleCardDelete} />
+        <Footer />
       </div>
     </CurrentUserContext.Provider>
     

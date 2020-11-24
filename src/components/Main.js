@@ -34,9 +34,9 @@ function Main(props) {
                   image={card.link}
                   title={card.name}
                   likesCount={card.likes.length}
-                  onCardLike={props.handleCardLike}
-                  onDeleteCard={props.handleDeleteCardClick}
-                  onCard={props.handleCardClick}
+                  onCardLike={props.onCardLike}
+                  onDeleteCard={props.onDeleteCard}
+                  onCard={props.onCard}
                 />
               )
             })}
