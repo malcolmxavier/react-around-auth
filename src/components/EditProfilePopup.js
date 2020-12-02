@@ -31,9 +31,9 @@ function EditProfilePopup(props) {
 
       return (
         <PopupWithForm name='edit-profile' action='Edit Profile' title='Edit profile' button='save' onClose={props.onClose} isOpen={props.isOpen} onSubmit={handleSubmit}>
-          <input name='userName' id='profile-name' className='popup__input popup__input_type_name' type='text' placeholder='Name' required minLength='2' maxLength='40' onChange={handleNameChange} />
+          <input name='userName' value={name} id='profile-name' className='popup__input popup__input_type_name' type='text' placeholder='Name' required minLength='2' maxLength='40' onChange={handleNameChange} />
           <span id='profile-name-error' className='popup__error'></span>
-          <input name='userOccupation' id='profile-occupation' className='popup__input popup__input_type_occupation' type='text' placeholder='About Me' required minLength='2' maxLength='200' onChange={handleDescriptionChange} />
+          <input name='userOccupation' value={description} id='profile-occupation' className='popup__input popup__input_type_occupation' type='text' placeholder='About Me' required minLength='2' maxLength='200' onChange={handleDescriptionChange} />
           <span id='profile-occupation-error' className='popup__error'></span>
         </PopupWithForm>
       )

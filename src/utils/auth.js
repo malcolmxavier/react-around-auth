@@ -5,13 +5,11 @@ export const register = (email, password) => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password })
     })
-        .then(response => response.json())
-        .catch(console.log);
-
+    .then(res => res.ok ? res.json() : Promise.reject(res.status + ' Error: ' + res.statusText))
 }
 
 export const authorize = (email, password) => {
@@ -23,13 +21,13 @@ export const authorize = (email, password) => {
         },
         body: JSON.stringify({ email, password })
     })
-        .then(response => response.json())
-        .then((data) => {
-            if (data.token) {
-                localStorage.setItem('jwt', data.token);
-                return data;
-            }
-        });
+    .then(res => res.ok ? res.json() : Promise.reject(res.status + ' Error: ' + res.statusText))
+    .then((data) => {
+        if (data.token) {
+            localStorage.setItem('jwt', data.token);
+            return data;
+        }
+    });
 }
 
 
@@ -42,5 +40,8 @@ export const getContent = (token) => {
             'Authorization': `Bearer ${token}`
         }
     })
-        .then(res => res.json())
+    .then(res => res.ok ? res.json() : Promise.reject(res.status + ' Error: ' + res.statusText))
+    .then((data) => {
+        return data
+    })
 }

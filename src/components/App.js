@@ -12,7 +12,7 @@ import EditAvatarPopup from './EditAvatarPopup.js';
 import EditProfilePopup from './EditProfilePopup.js';
 import AddCardPopup from './AddCardPopup.js';
 import PopupWithImage from './PopupWithImage.js';
-import * as auth from '../auth.js';
+import * as auth from '../utils/auth.js';
 import {api} from '../utils/API.js';
 import {CurrentUserContext} from '../contexts/CurrentUserContext.js';
 import '../index.css';
@@ -36,8 +36,7 @@ function App() {
   function handleSignup(email, password) {
     auth.register(email, password)
     .then((res) => {
-        if (!res || res.statusCode === 400) {
-          setIsSuccessful(false);
+        if (!res || res.status === 400) {
           setIsInfoTooltipPopupOpen(true);
           throw new Error('Something is not right.');
         } else {
@@ -50,36 +49,50 @@ function App() {
     .catch(err => console.log(err));
 }
 
-  function handleLogin(email, password) {
-    if (!email || !password) {
-      return;
-    }
-    
-    auth.authorize(email, password)
-    .then((data) => {
-      if (!data) {
-          throw new Error('Something is not right.');
-      } else {
-        history.push('/');
-      }
-    })
-    .catch(err => console.log(err));
-  }
-
-  React.useEffect(() => {
-    let jwt = localStorage.getItem('jwt');
+  function checkToken() {
+    const jwt = localStorage.getItem('jwt');
 
     if (jwt) {
       auth.getContent(jwt)
       .then((res) => {
-        let userData = {username: res.username, email: res.email}
+        const userData = {username: res.username, email: res.email}
 
         setIsLoggedIn(true);
         setUserData(userData);
         history.push('/');
       })
+      .catch(err => console.log(err));
     }
-  }, [history, isLoggedIn])
+  }
+
+  function handleLogin(email, password) {
+    if (!email || !password) {
+      return;
+    }
+
+    auth.authorize(email, password)
+    .then((data) => { 
+      if (!data) { 
+          throw new Error('Something is not right.'); 
+      }
+    }) 
+    .then(() => {
+      api.getCardList()
+      .then(res => {
+        setCards(res);
+      })
+    }, [setCards, cards])
+    .then(() => {
+      api.getUserInfo()
+      .then(res => {
+        setCurrentUser(res);
+      }, [setCurrentUser])
+    })
+    .then(() => {
+      checkToken();
+    })
+    .catch(err => console.log(err));
+  }
 
   function handleSignOut() {
     localStorage.removeItem('jwt');
@@ -109,49 +122,49 @@ function App() {
 
   function handleCardDelete(card){
     api.removeCard(card._id)
-    .then((res) => {
+    .then(() => {
       const newCards = cards.filter((c) => c._id !== card._id);
       setCards(newCards);
     })
     .catch(err => console.log(err))
   }
 
-  React.useEffect(() => {
-    api.getCardList()
-    .then(res => {
-      setCards(res);
-    })
-    .catch(err => console.log(err))
-  }, [setCards, cards])
-
-  React.useEffect(() => {
-    api.getUserInfo()
-    .then(res => {
-      setCurrentUser(res);
-    })
-    .catch(err => console.log(err));
-    }, [setCurrentUser]
-  )
+  function closeAllPopups() {
+    setIsInfoTooltipPopupOpen(false);
+    setIsAvatarPopupOpen(false);
+    setIsEditProfilePopupOpen(false);
+    setIsAddCardPopupOpen(false);
+    setIsDeleteCardPopupOpen(false);
+    setIsImagePopupOpen(false);
+  }
 
   function handleUpdateAvatar(avatar) {
     api.setUserAvatar(avatar)
-    .then(setCurrentUser({
+    .then(() => {
+      setCurrentUser({
       avatar,
       name: currentUser.name,
       about: currentUser.about
-    }))
-    .then(closeAllPopups())
+      })
+    })
+    .then(() => {
+      closeAllPopups()
+    })
     .catch(err => console.log(err));
   }
 
   function handleUpdateUser({name, about}) {
     api.setUserInfo(name, about)
-    .then(setCurrentUser({
+    .then(() => {
+      setCurrentUser({
       avatar: currentUser.avatar,
       name,
       about
-    }))
-    .then(closeAllPopups())
+      })
+    })
+    .then(() => {
+      closeAllPopups()
+    })
     .catch(err => console.log(err));
   }
 
@@ -160,7 +173,9 @@ function App() {
     .then((newCard) => {
       setCards([...cards, newCard])}
     )
-    .then(closeAllPopups())
+    .then(() => {
+      closeAllPopups()
+    })
     .catch(err => console.log(err));
   }
 
@@ -184,15 +199,6 @@ function App() {
 
   function handleDeleteCardClick() {
     setIsDeleteCardPopupOpen(true);
-  }
-
-  function closeAllPopups() {
-    setIsInfoTooltipPopupOpen(false);
-    setIsAvatarPopupOpen(false);
-    setIsEditProfilePopupOpen(false);
-    setIsAddCardPopupOpen(false);
-    setIsDeleteCardPopupOpen(false);
-    setIsImagePopupOpen(false);
   }
 
   return (

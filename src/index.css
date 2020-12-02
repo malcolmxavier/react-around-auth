@@ -28,6 +28,12 @@
 
 @import url('./blocks/close-button/close-button.css');
 
+@import url('./blocks/success-icon/success-icon.css');
+
+@import url('./blocks/failure-icon/failure-icon.css');
+
+@import url('./blocks/info-tooltip-button/info-tooltip-button.css');
+
 @import url('./blocks/save-button/save-button.css');
 
 @import url('./blocks/create-button/create-button.css');

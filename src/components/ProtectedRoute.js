@@ -3,7 +3,6 @@ import { Route, Redirect } from 'react-router-dom';
 import Header from './Header.js';
 
 function ProtectedRoute({component: Component, ...props}) {
-    console.log(props)
     return (
         <Route>
             {() => props.isLoggedIn ? 

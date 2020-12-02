@@ -21,7 +21,6 @@ class API {
         })
       })
       .then(res => res.ok ? res.json() : Promise.reject(res.status + ' Error: ' + res.statusText))
-      .catch(err => console.log(err))
     };
   
     setUserAvatar(avatar) {

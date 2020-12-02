@@ -2,8 +2,8 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm.js';
 
 function AddCardPopup(props) {;
-    const [newCardName, setNewCardName] = React.useState({})
-    const [newCardLink, setNewCardLink] = React.useState({});
+    const [newCardName, setNewCardName] = React.useState('')
+    const [newCardLink, setNewCardLink] = React.useState('');
 
     function handleNewCardNameChange(e) {
         setNewCardName(e.target.value);
