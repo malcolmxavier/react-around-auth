@@ -14,10 +14,14 @@ function Card(props) {
         props.onCardLike(props.card);
     }
 
+    function handleTrashButtonClick() {
+        props.onDeleteCard(props.card)
+    }
+
     return(
         <li className='photo-grid__item' key={props.id}>
             <div className='photo-grid__image' style={{backgroundImage:`url(${props.image})`}} onClick={handleCardClick}></div>
-            <button className={isOwn ? 'trash-button' : 'trash-button_hidden'} aria-label='Delete Card' onClick={props.onDeleteCard}></button>
+            <button className={isOwn ? 'trash-button' : 'trash-button_hidden'} aria-label='Delete Card' onClick={handleTrashButtonClick}></button>
             <div className='photo-grid__description'>
                 <h3 className='photo-grid__label'>{props.title}</h3>
                 <div className='photo-grid__likes'>

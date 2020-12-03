@@ -32,7 +32,6 @@ class API {
         })
       })
       .then(res => res.ok ? res.json() : Promise.reject(res.status + ' Error: ' + res.statusText))
-      .catch(err => console.log(err))
     };
   
     getCardList() {
@@ -52,7 +51,6 @@ class API {
         })
       })
       .then(res => res.ok ? res.json() : Promise.reject(res.status + ' Error: ' + res.statusText))
-      .catch(err => console.log(err))
     };
   
     removeCard(_id) {
@@ -61,7 +59,6 @@ class API {
         method: "DELETE"
       })
       .then(res => res.ok ? res.json() : Promise.reject(res.status + ' Error: ' + res.statusText))
-      .catch(err => console.log(err))
     };
   
     addCardLike(_id) {
@@ -70,7 +67,6 @@ class API {
         method: "PUT",
       })
       .then(res => res.ok ? res.json() : Promise.reject(res.status + ' Error: ' + res.statusText))
-      .catch(err => console.log(err))
     };
   
     removeCardLike(_id) {
@@ -79,7 +75,6 @@ class API {
         method: "DELETE",
       })
       .then(res => res.ok ? res.json() : Promise.reject(res.status + ' Error: ' + res.statusText))
-      .catch(err => console.log(err))
     };
   }
 

@@ -23,6 +23,7 @@ function App() {
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [userData, setUserData] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({avatar: '', name: '', about: ''});
+  const [card, setCard] = React.useState({});
   const [cards, setCards] = React.useState([]);
   const [isEditAvatarPopupOpen, setIsAvatarPopupOpen] = React.useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -32,6 +33,36 @@ function App() {
   const [image, setImage] = React.useState("");
   const [imageCaption, setImageCaption] = React.useState("");
   const history = useHistory();
+
+  React.useEffect(() => {
+    const jwt = localStorage.getItem('jwt');
+
+    if (jwt) {
+      auth.getContent(jwt)
+      .then((res) => {
+        const userData = {username: res.username, email: res.email}
+
+        setIsLoggedIn(true);
+        setUserData(userData);
+      })
+      .then(() => {
+        api.getCardList()
+        .then(res => {
+          setCards(res);
+        })
+      }, [setCards, cards])
+      .then(() => {
+        api.getUserInfo()
+        .then(res => {
+          setCurrentUser(res);
+        }, [setCurrentUser])
+      })
+      .then(() => {
+        history.push('/');
+      })
+      .catch(err => console.log(err));
+    }
+  }, [history, cards])
 
   function handleSignup(email, password) {
     auth.register(email, password)
@@ -47,22 +78,6 @@ function App() {
         return res;
     })
     .catch(err => console.log(err));
-}
-
-  function checkToken() {
-    const jwt = localStorage.getItem('jwt');
-
-    if (jwt) {
-      auth.getContent(jwt)
-      .then((res) => {
-        const userData = {username: res.username, email: res.email}
-
-        setIsLoggedIn(true);
-        setUserData(userData);
-        history.push('/');
-      })
-      .catch(err => console.log(err));
-    }
   }
 
   function handleLogin(email, password) {
@@ -89,7 +104,9 @@ function App() {
       }, [setCurrentUser])
     })
     .then(() => {
-      checkToken();
+      setIsLoggedIn(true);
+      setUserData(userData);
+      history.push('/');
     })
     .catch(err => console.log(err));
   }
@@ -120,7 +137,8 @@ function App() {
     }
   }
 
-  function handleCardDelete(card){
+  function handleCardDelete(e){
+    e.preventDefault();
     api.removeCard(card._id)
     .then(() => {
       const newCards = cards.filter((c) => c._id !== card._id);
@@ -197,8 +215,9 @@ function App() {
     setImageCaption(caption);
   }
 
-  function handleDeleteCardClick() {
+  function handleDeleteCardClick(card) {
     setIsDeleteCardPopupOpen(true);
+    setCard(card);
   }
 
   return (
