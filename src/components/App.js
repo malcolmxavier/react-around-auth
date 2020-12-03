@@ -21,7 +21,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [isSuccessful, setIsSuccessful] = React.useState(false);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
-  const [userData, setUserData] = React.useState(false);
+  const [userData, setUserData] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({avatar: '', name: '', about: ''});
   const [card, setCard] = React.useState({});
   const [cards, setCards] = React.useState([]);
@@ -50,19 +50,19 @@ function App() {
         .then(res => {
           setCards(res);
         })
-      }, [setCards, cards])
+      })
       .then(() => {
         api.getUserInfo()
         .then(res => {
           setCurrentUser(res);
-        }, [setCurrentUser])
+        })
       })
       .then(() => {
         history.push('/');
       })
       .catch(err => console.log(err));
     }
-  }, [history, cards])
+  })
 
   function handleSignup(email, password) {
     auth.register(email, password)
@@ -96,12 +96,12 @@ function App() {
       .then(res => {
         setCards(res);
       })
-    }, [setCards, cards])
+    })
     .then(() => {
       api.getUserInfo()
       .then(res => {
         setCurrentUser(res);
-      }, [setCurrentUser])
+      })
     })
     .then(() => {
       setIsLoggedIn(true);
